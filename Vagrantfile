@@ -12,9 +12,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.hostmanager.include_offline = true
 
   config.vm.define "controller" do |controller_config|
-    controller_config.vm.box = "bento/ubuntu-22.04-arm64"
+    controller_config.vm.box = "bento/ubuntu-24.04"
     controller_config.vm.hostname = "controller"
-    controller_config.vm.network "private_network", ip: "192.168.33.10"
+    controller_config.vm.network "private_network", ip: "192.168.56.10"
     controller_config.vm.synced_folder "./ansible", "/home/vagrant/ansible"
     controller_config.vm.provider "vmware_desktop" do |v|
       v.gui = false
@@ -29,11 +29,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  (1..5).each do |i|
+  (1..3).each do |i|
     config.vm.define "node0#{i}" do |machine|
       machine.vm.box = "bento/ubuntu-22.04-arm64"
       machine.vm.hostname = "node0#{i}"
-      machine.vm.network "private_network", ip: "192.168.33.1#{i}"
+      machine.vm.network "private_network", ip: "192.168.56.1#{i}"
       machine.vm.provider "vmware_desktop" do |v|
         v.gui = false
         v.memory = 2048
